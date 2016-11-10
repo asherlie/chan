@@ -15,7 +15,8 @@ class Chan:
 		#thread param should include the board, /thread/ and the thread number
 #		print(self.base + board + "/thread/" + str(thread) + ".json")
 		return requests.get(self.base + board + "/thread/" + str(thread) + ".json")
-
+		
+		#returns number of new images downloaded
 	def save_pics(self, board, thread, directory):
 		new_p = 0
 	#pics are saved at http(s)://i.4cdn.org/board/['tim'].['ext']
