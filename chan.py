@@ -15,8 +15,8 @@ class Chan:
 		#thread param should include the board, /thread/ and the thread number
 #		print(self.base + board + "/thread/" + str(thread) + ".json")
 		return requests.get(self.base + board + "/thread/" + str(thread) + ".json")
-		
-		#returns number of new images downloaded
+
+		#returns num of new images downloaded
 	def save_pics(self, board, thread, directory):
 		new_p = 0
 	#pics are saved at http(s)://i.4cdn.org/board/['tim'].['ext']
@@ -52,15 +52,19 @@ class Chan:
 		print(str(new_p) + " new pics downloaded")
 		return new_p
 				
-				
 	def print_all_in_board(self, board):
-		i = 1 #idk why they started indexing at 1
-		while i <= 10: #didn't do for to start at 1
-			g = self.get_front(board, i).json()['threads']
-			for thread in g:
-				if 'com' in thread['posts'][0]:
-					print(thread['posts'][0]['com'] + ". " + str(thread['posts'][0]['replies']) + " replies. " + "ID: " + str(thread['posts'][0]['no']))
-			i = i + 1
+		i = 1 #indexing starts at 1 for some reason
+		while i <= 10: #didn't do for to start at 1 -- CHANGE THIS ASAP!! THERE ARE NOT ALWAYS 10 PAGES. I MAKE IT WHILE ERROR IS STILL 200!!!!
+#			g = self.get_front(board, i).json()['threads'] #this always works
+			g = self.get_front(board, i)
+			if g.status_code == 200:
+				g = g.json()['threads']
+				for thread in g:
+					if 'com' in thread['posts'][0]:
+						print(thread['posts'][0]['com'] + ". " + str(thread['posts'][0]['replies']) + " replies. " + "ID: " + str(thread['posts'][0]['no']))
+				i = i + 1
+			else:
+				break #this is a hacky workaround that should be fixed asap
 		
 
 	def fuckin_everything(self):
