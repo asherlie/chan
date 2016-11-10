@@ -53,7 +53,7 @@ class Chan:
 				
 				
 	def print_all_in_board(self, board):
-		i = 1
+		i = 1 #idk why they started indexing at 1
 		while i <= 10: #didn't do for to start at 1
 			g = self.get_front(board, i).json()['threads']
 			for thread in g:
