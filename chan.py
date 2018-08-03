@@ -33,10 +33,38 @@ class Chan:
                             tmp_val = tmp_str.find(' ')
                             if tmp_val != -1:
                                 tmp_str = tmp_str[0:tmp_val]
-                            print(tmp_str)
                             ret.append(tmp_str)
                             tmp_str_e = tmp_str_e[tmp_val:]
+            return list(set(ret))
+    
+        def concat_all(self, lst):
+                ret = ''
+                for i in lst:
+                    ret += i
+                return ret
+
+        def fix_links(self, links):
+            ret = []
+            tv = 0
+            tvv = 0
+            ts = ''
+            for i in links:
+                tv = i.find('<')
+                tvv = i.find('>')
+                if(tv == -1 or tvv == -1):
+                    ret.append(i)
+                    continue
+                ts = i[0:tv] + i[tvv+1:]
+                ret.append(ts)
             return ret
+
+        def get_yt_links(self, board, th):
+                t = self.get_thread(board, th).json()['posts']
+                res = self.search_thread(t, ['youtube.com', 'youtu.be'])
+                r = []
+                for i in res:
+                    r.append(i.split('<br>')[0])
+                return self.fix_links(r)
 
                 #returns num of new images downloaded
         def save_pics(self, board, thread, directory):
