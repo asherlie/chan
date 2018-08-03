@@ -2,6 +2,7 @@ import requests
 import json
 import os
 import urllib
+
 class Chan:
 	base = "http://a.4cdn.org/"
 	pic_base = "http://i.4cdn.org/"
@@ -43,9 +44,6 @@ class Chan:
 				f.write('no title')
 		for post in thread_dl.json()['posts']:
 			if 'fsize' in post: #if theres a pic attached
-
-#				print(self.pic_base + board + "/" +  str(post['tim']) + "." + post['ext'])
-#				print(directory + "/" + board + "/" + str(thread) + "/" + str(post['tim']) + post['ext'])
 				if not os.path.exists(directory + "/" + board + "/" + str(thread) + "/" + str(post['tim']) + post['ext']):
 					new_p = new_p + 1
 					urllib.request.urlretrieve(self.pic_base + board + "/" +  str(post['tim']) + post['ext'], directory + "/" + board + "/" + str(thread) + "/" + str(post['tim']) + post['ext'])
@@ -63,11 +61,10 @@ class Chan:
 					if 'com' in thread['posts'][0]:
 						print(thread['posts'][0]['com'] + ". " + str(thread['posts'][0]['replies']) + " replies. " + "ID: " + str(thread['posts'][0]['no']))
 				i = i + 1
-			else:
-				break #this is a hacky workaround that should be fixed asap
+			else: break #this is a hacky workaround that should be fixed asap
 		
 
-	def fuckin_everything(self):
+	def print_everything(self):
 		for board in self.boards:
 			print("~~ /" + str(board) +  "/ ~~")
 			self.print_all_in_board(board)
