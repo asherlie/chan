@@ -12,7 +12,7 @@ if __name__ == '__main__':
     post_id = split[5]
     posts = c.get_thread(board, post_id).json()['posts']
     thread_name = posts[0]['semantic_url']
-    com = posts[0]['com'].split('<br>')[0]
+    com = posts[0]['com'].split('<br>')[0] if 'com' in posts[0] else ''
     sdir = com if len(com) > len(thread_name) else thread_name
     sdir = sdir.replace('/', '_')
     ydl_opts = {
