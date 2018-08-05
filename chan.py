@@ -58,15 +58,15 @@ class Chan:
                 ret.append(ts)
             return ret
 
-        def get_yt_links(self, board, th):
-                t = self.get_thread(board, th).json()['posts']
-                res = self.search_thread(t, ['youtube.com', 'youtu.be'])
+        # takes in get_thread().json()['posts']
+        def get_yt_links(self, posts):
+                res = self.search_thread(posts, ['youtube.com', 'youtu.be'])
                 r = []
                 for i in res:
                     r.append(i.split('<br>')[0])
                 return self.fix_links(r)
-
-                #returns num of new images downloaded
+        
+        #returns num of new images downloaded
         def save_pics(self, board, thread, directory):
                 new_p = 0
         #pics are saved at http(s)://i.4cdn.org/board/['tim'].['ext']
