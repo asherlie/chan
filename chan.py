@@ -26,13 +26,10 @@ class Chan:
                         tmp_str_e = i['com']
                         rng = 0
                         while True:
-                            print(rng)
                             tmp_str = tmp_str_e[rng:]
-                            # adding the index of the search term to rng
                             fv = tmp_str.find(term)
                             if fv == -1: break
                             rng += fv
-                            print('incred rng by ' + str(fv))
                             tmp_str = tmp_str_e[rng:]
                             fv = tmp_str.find(' ')
                             if fv != -1:
