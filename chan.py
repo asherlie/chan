@@ -24,25 +24,23 @@ class Chan:
                 for i in th:
                     if 'com' in i:
                         tmp_str_e = i['com']
-                        # while tmp_val != -1:
+                        rng = 0
                         while True:
-                            tmp_str = tmp_str_e
-                            tmp_val = tmp_str.find(term)
-                            if tmp_val == -1: break
-                            tmp_str = tmp_str[tmp_val:]
-                            tmp_val = tmp_str.find(' ')
-                            if tmp_val != -1:
-                                tmp_str = tmp_str[0:tmp_val]
+                            print(rng)
+                            tmp_str = tmp_str_e[rng:]
+                            # adding the index of the search term to rng
+                            fv = tmp_str.find(term)
+                            if fv == -1: break
+                            rng += fv
+                            print('incred rng by ' + str(fv))
+                            tmp_str = tmp_str_e[rng:]
+                            fv = tmp_str.find(' ')
+                            if fv != -1:
+                                tmp_str = tmp_str[0:fv]
                             ret.append(tmp_str)
-                            tmp_str_e = tmp_str_e[tmp_val:]
+                            rng += 1
             return list(set(ret))
     
-        def concat_all(self, lst):
-                ret = ''
-                for i in lst:
-                    ret += i
-                return ret
-
         def fix_links(self, links):
             ret = []
             tv = 0

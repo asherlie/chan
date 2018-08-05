@@ -13,6 +13,7 @@ if __name__ == '__main__':
     posts = c.get_thread(board, post_id).json()['posts']
     thread_name = posts[0]['semantic_url']
     ydl_opts = {
+        # TODO: use longest of the two - first line of first comment or semantic url
         'outtmpl': thread_name+'/%(title)s.%(ext)s',
         'format': 'bestaudio/best',
         'postprocessors': [{
