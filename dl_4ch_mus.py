@@ -4,8 +4,8 @@ import youtube_dl
 
 c = chan.Chan()
 
-if __name__ == '__main__':
-    split = sys.argv[1].split('#')[0].split('/')
+def dl_from_link(lnk):
+    split = lnk.split('#')[0].split('/')
     if len(split) < 6:
             raise Exception('malformed url')
     board = split[3]
@@ -29,3 +29,6 @@ if __name__ == '__main__':
     links = c.get_yt_links(posts)
     print('downloading ' + str(len(links)) + ' songs from ' + sdir)
     ydl.download(links)
+
+if __name__ == '__main__':
+    dl_from_link(sys.argv[1])
