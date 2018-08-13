@@ -6,13 +6,14 @@ c = chan.Chan()
 
 def dl_from_link(lnk):
     split = lnk.split('#')[0].split('/')
-    if len(split) < 6:
-            return False
+    if len(split) < 6: return False
     board = split[3]
     post_id = split[5]
-    posts = c.get_thread(board, post_id).json()['posts']
-    thread_name = posts[0]['semantic_url']
-    com = posts[0]['com'].split('<br>')[0] if 'com' in posts[0] else ''
+    posts = c.get_thread(board, post_id)
+    if posts.status_code != 200: return False
+    postsj = posts.json()['posts']
+    thread_name = postsj[0]['semantic_url']
+    com = postsj[0]['com'].split('<br>')[0] if 'com' in postsj[0] else ''
     sdir = com if len(com) > len(thread_name) else thread_name
     sdir = sdir.replace('/', '_')
     ydl_opts = {
@@ -26,7 +27,7 @@ def dl_from_link(lnk):
         }],
     }
     ydl = youtube_dl.YoutubeDL(ydl_opts)
-    links = c.get_yt_links(posts)
+    links = c.get_yt_links(postsj)
     print('downloading ' + str(len(links)) + ' songs from ' + sdir)
     ydl.download(links)
     return True
