@@ -7,7 +7,7 @@ c = chan.Chan()
 def dl_from_link(lnk):
     split = lnk.split('#')[0].split('/')
     if len(split) < 6:
-            raise Exception('malformed url')
+            return False
     board = split[3]
     post_id = split[5]
     posts = c.get_thread(board, post_id).json()['posts']
@@ -29,6 +29,8 @@ def dl_from_link(lnk):
     links = c.get_yt_links(posts)
     print('downloading ' + str(len(links)) + ' songs from ' + sdir)
     ydl.download(links)
+    return True
 
 if __name__ == '__main__':
-    dl_from_link(sys.argv[1])
+    if len(sys.argv) < 2: print('enter a link to a 4chan thread')
+    elif not dl_from_link(sys.argv[1]): print('invalid url')
